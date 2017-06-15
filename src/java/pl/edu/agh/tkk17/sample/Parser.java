@@ -46,7 +46,7 @@ public class Parser
 
     private Node parseTerm()
     {
-        Node left = this.parseNumber();
+        Node left = this.parseSection();
         if (this.check(TokenType.MUL)) {
             this.forward();
             Node right = this.parseTerm();
@@ -57,6 +57,19 @@ public class Parser
             return new NodeDiv(left, right);
         } else {
             return left;
+        }
+    }
+
+    private Node parseSection() {
+        Node left = null;
+        if (this.check(TokenType.LBR)) {
+            this.forward();
+            left = this.parseExpression(); // expression takes care of itself
+            this.expect(TokenType.RBR);
+            this.forward();
+            return left;
+        } else {
+            return this.parseNumber();
         }
     }
 
