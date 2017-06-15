@@ -77,7 +77,15 @@ public class Scanner implements Iterator<Token>, Iterable<Token>
             this.readChar();
         } else if (isDigit(character)) {
             String value = "";
-            while (isDigit(character)) {
+            boolean floating = false;
+            while (isDigit(character) || character == '.') {
+                if (character == '.') {
+                    if (floating == false) floating = true;
+                    else {
+                        String anotherComaLocation = this.locate(this.position);
+                        throw new UnexpectedCharacterException(character,anotherComaLocation);
+                    }
+                }
                 value += String.valueOf(character);
                 this.readChar();
                 character = this.character;

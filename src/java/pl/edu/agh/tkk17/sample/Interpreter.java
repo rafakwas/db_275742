@@ -8,9 +8,6 @@ public class Interpreter
     {
         try {
             Scanner scanner = new Scanner(System.in);
-//            for (Token token : scanner) {
-//                System.out.println(token.getType());
-//            }
             Node tree = Parser.parse(scanner);
             float result = Evaluator.evaluate(tree);
             String repr;
